@@ -18,6 +18,8 @@ import {
     getWeek,
     getYear,
     isToday,
+    intervalToDuration,
+    formatDuration,
 } from 'date-fns';
 import { enUS, he as defaultLocale } from 'date-fns/locale';
 
@@ -293,4 +295,45 @@ export const radio = {
     Melbourne: 'http://radio.garden/listen/gk-international/Ry9m7iE1',
     'Papa New Guinea': 'http://radio.garden/visit/tobelo/ee9bSQR7',
     Christchurch: 'http://radio.garden/listen/the-breeze-fm-93-4/Jp5DQhph',
+};
+
+export const timeAgo = (date: Date | string | number) => {
+    try {
+        if (typeof date === 'string' || typeof date === 'number') {
+            date = new Date(date);
+        }
+
+        const now = new Date();
+
+        const duration = intervalToDuration({
+            start: date.getTime(),
+            end: now.getTime(),
+        });
+
+        duration.seconds = 0;
+
+        const output = formatDuration(duration);
+
+        return output ? output + ' ago' : 'Just now';
+    } catch (_err) {
+        return '';
+    }
+};
+
+export const shortDate = (date: Date | string | number) => {
+    try {
+        if (typeof date === 'string' || typeof date === 'number') {
+            date = new Date(date);
+        }
+
+        const today = isToday(date);
+
+        if (today) {
+            return format(date, 'HH:mm');
+        }
+
+        return format(date, 'd-MM HH:mm');
+    } catch (_err) {
+        return '';
+    }
 };
