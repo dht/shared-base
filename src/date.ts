@@ -15,6 +15,8 @@ import {
     setDay,
     addWeeks,
     addMinutes,
+    setMinutes,
+    setHours,
     getWeek,
     getYear,
     isToday,
@@ -125,6 +127,10 @@ export class SimpleDate {
         return new SimpleDate(now);
     }
 
+    static now() {
+        return new SimpleDate();
+    }
+
     constructor(private date: Date = new Date()) {}
 
     addWeeks(weeks: number) {
@@ -142,8 +148,19 @@ export class SimpleDate {
         return this;
     }
 
+    setTime(time: string) {
+        const [hours, minutes] = time.split(':').map((i) => parseInt(i));
+        this.date = setHours(this.date, hours);
+        this.date = setMinutes(this.date, minutes);
+        return this;
+    }
+
     format(format: string, options: any = { locale: defaultLocale }) {
-        return formatOriginal(this.date, format, options);
+        try {
+            return formatOriginal(this.date, format, options);
+        } catch (_err) {
+            return '';
+        }
     }
 
     toInfo(): DateInfo {
@@ -155,15 +172,19 @@ export class SimpleDate {
         });
         const yearShort = this.format('yy');
         const week = getWeek(this.date, { locale: defaultLocale });
+        const dayOfWeek = getDay(this.date);
         const weekAndYear = `W${week}-${yearShort}`;
+        const hour = this.format('HH:mm');
+
+        const dateStringWeek = `w${week}-d${dayOfWeek}-${yearShort}-${hour}`;
 
         return {
-            dayOfWeek: getDay(this.date),
+            dayOfWeek,
             dayOfYear: getDayOfYear(this.date),
             week,
             year: getYear(this.date),
             quarter: getQuarter(this.date),
-            hour: this.format('HH:mm'),
+            hour,
             yearShort,
             dayOfWeekName,
             dayOfWeekShortName,
@@ -171,6 +192,7 @@ export class SimpleDate {
             dateString: this.format('dd-MM'),
             dateShortString: formatOriginal(this.date, 'iiii, MMM do'),
             dateStringFull: this.date.toString(),
+            dateStringWeek,
             isToday: isToday(this.date),
         };
     }
@@ -179,8 +201,10 @@ export class SimpleDate {
         return parseInt(this.format('HH')) < 16;
     }
 
-    toText() {
-        return this.format('yyyy-MM-dd');
+    toText(withHour?: boolean) {
+        return withHour
+            ? this.format('MMM d, yyyy, H:mm')
+            : this.format('yyyy-MM-dd');
     }
 
     value() {
@@ -236,6 +260,7 @@ type DateInfo = {
     dateShortString: string;
     dateStringFull: string;
     weekAndYear: string;
+    dateStringWeek: string;
     isToday?: boolean;
 };
 
