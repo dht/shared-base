@@ -17,11 +17,15 @@ import {
     addMinutes,
     setMinutes,
     setHours,
+    startOfDay,
+    startOfMonth,
+    startOfYear,
     getWeek,
     getYear,
     isToday,
     intervalToDuration,
     formatDuration,
+    differenceInMinutes,
 } from 'date-fns';
 import { enUS, he as defaultLocale } from 'date-fns/locale';
 
@@ -119,6 +123,8 @@ export const dateFilename = (suffix: string) => {
 };
 
 export class SimpleDate {
+    private date: Date;
+
     static fromWeek(weekPointer: WeekPointer, dayOfWeek: number = 0) {
         let now = new Date();
         now = setYear(now, weekPointer.year);
@@ -131,7 +137,19 @@ export class SimpleDate {
         return new SimpleDate();
     }
 
-    constructor(private date: Date = new Date()) {}
+    constructor(date?: Date | string) {
+        switch (typeof date) {
+            case 'undefined':
+                this.date = new Date();
+                break;
+            case 'string':
+                this.date = new Date(date);
+                break;
+            default:
+                this.date = date;
+                break;
+        }
+    }
 
     addWeeks(weeks: number) {
         this.date = addWeeks(this.date, weeks);
@@ -207,8 +225,16 @@ export class SimpleDate {
             : this.format('yyyy-MM-dd');
     }
 
+    toString() {
+        return this.format('yyyy-MM-dd HH:mm:ss');
+    }
+
     value() {
         return this.date;
+    }
+
+    timeAgo() {
+        return timeAgo(this.date);
     }
 }
 
@@ -322,7 +348,10 @@ export const radio = {
     Christchurch: 'http://radio.garden/listen/the-breeze-fm-93-4/Jp5DQhph',
 };
 
-export const timeAgo = (date: Date | string | number) => {
+export const timeAgo = (
+    date: Date | string | number,
+    withSeconds?: boolean
+) => {
     try {
         if (typeof date === 'string' || typeof date === 'number') {
             date = new Date(date);
@@ -335,7 +364,9 @@ export const timeAgo = (date: Date | string | number) => {
             end: now.getTime(),
         });
 
-        duration.seconds = 0;
+        if (!withSeconds) {
+            duration.seconds = 0;
+        }
 
         const output = formatDuration(duration);
 
@@ -362,3 +393,62 @@ export const shortDate = (date: Date | string | number) => {
         return '';
     }
 };
+
+export const minutesToDuration = (
+    minutesTotal: number,
+    workingHoursPerDay: number = 8
+) => {
+    try {
+        const output: string[] = [];
+
+        let memo = minutesTotal;
+
+        const minutesPerDay = workingHoursPerDay * 60;
+        const minutesPerWeek = 5 * minutesPerDay;
+
+        const weeks = Math.floor(memo / minutesPerWeek);
+        memo -= weeks * minutesPerWeek;
+
+        const days = Math.floor(memo / minutesPerDay);
+        memo -= days * minutesPerDay;
+
+        const hours = Math.floor(memo / 60);
+        memo -= hours * 60;
+
+        const minutes = Math.ceil(memo);
+
+        if (weeks) {
+            output.push(`${weeks}w`);
+        }
+
+        if (days) {
+            output.push(`${weeks}d`);
+        }
+
+        if (hours) {
+            output.push(`${weeks}h`);
+        }
+
+        if (minutes) {
+            output.push(`${minutes}m`);
+        }
+
+        return output.join(' ');
+    } catch (_err) {
+        return '';
+    }
+};
+
+export const minutesThisX = () => {
+    const now = new Date();
+
+    return {
+        today: differenceInMinutes(now, startOfDay(now)),
+        week: differenceInMinutes(now, startOfWeek(now)),
+        month: differenceInMinutes(now, startOfMonth(now)),
+        year: differenceInMinutes(now, startOfYear(now)),
+    };
+};
+
+export const minutesPassed = (now: Date, past: Date) =>
+    differenceInMinutes(now, past);
