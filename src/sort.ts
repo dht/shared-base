@@ -2,7 +2,11 @@ type Order = 'asc' | 'desc';
 
 export const sortBy =
     (fieldName: string, order: Order = 'asc') =>
-    (a: Json, b: Json) => {
+    (a?: Json, b?: Json) => {
+        if (!a || !b) {
+            return 0;
+        }
+
         if (a[fieldName] === b[fieldName]) {
             return 0;
         }
