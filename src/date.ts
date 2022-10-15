@@ -370,7 +370,64 @@ export const timeAgo = (
 
         const output = formatDuration(duration);
 
-        return output ? output + ' ago' : 'Just now';
+        if (!output) {
+            return 'Just now';
+        }
+
+        return output + ' ago';
+    } catch (_err) {
+        return '';
+    }
+};
+
+export const inTime = (date: Date | string | number, withSeconds?: boolean) => {
+    try {
+        if (typeof date === 'string' || typeof date === 'number') {
+            date = new Date(date);
+        }
+
+        const now = new Date();
+
+        if (date < now) {
+            return 'Past';
+        }
+
+        const duration = intervalToDuration({
+            start: date.getTime(),
+            end: now.getTime(),
+        });
+
+        duration.seconds = 0;
+
+        if (duration.years) {
+            duration.months = 0;
+            duration.weeks = 0;
+            duration.days = 0;
+            duration.hours = 0;
+            duration.minutes = 0;
+        } else if (duration.months) {
+            duration.weeks = 0;
+            duration.days = 0;
+            duration.hours = 0;
+            duration.minutes = 0;
+        } else if (duration.weeks) {
+            duration.days = 0;
+            duration.hours = 0;
+            duration.minutes = 0;
+        } else if (duration.days) {
+            if (duration.days > 1) {
+                duration.hours = 0;
+            }
+            duration.minutes = 0;
+        }
+
+        const output = formatDuration(duration);
+
+        if (!output) {
+            return 'Just now';
+        }
+
+        return 'in ' + output;
     } catch (_err) {
         return '';
     }

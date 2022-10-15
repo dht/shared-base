@@ -9,3 +9,4 @@ export * from './rollup';
 export * from './sort';
 export * from './storage';
 export * from './systemEvents';
+export * from './thumbs';
