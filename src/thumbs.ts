@@ -53,3 +53,16 @@ export const getScreenshot = (widget: Json) => {
         imageRatio,
     };
 };
+
+export const getScreenshotData = (widget: Json) => {
+    const data = {
+        ...getScreenshot(widget),
+        ...getScreenshotThumb(widget),
+    };
+
+    return {
+        imageUrl: data.imageUrl,
+        imageThumbUrl: data.thumbUrl,
+        ratio: data.imageRatio,
+    };
+};
