@@ -27,7 +27,13 @@ import {
     formatDuration,
     differenceInMinutes,
 } from 'date-fns';
-import { enUS, he as defaultLocale } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale';
+
+let defaultLocale = enUS;
+
+export const setDefaultLocale = (newValue: Locale) => {
+    defaultLocale = newValue;
+};
 
 const days = [
     'Sunday',
