@@ -1,3 +1,4 @@
+export * from './colors';
 export * from './date';
 export * from './delay';
 export * from './download';
