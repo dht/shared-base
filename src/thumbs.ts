@@ -66,3 +66,24 @@ export const getScreenshotData = (widget: Json) => {
         ratio: data.imageRatio,
     };
 };
+
+export const rawImageUrlToUrls = (
+    rawImageUrl: string,
+    folderName: string,
+    imageId: string
+) => {
+    const parts = rawImageUrl.split(/\/|%2F/);
+    parts.pop();
+    parts.pop();
+    parts.push(folderName);
+
+    const base = parts.join('/') + encodeURIComponent('/');
+
+    const imageUrl = [base, `${imageId}.webp?alt=media`].join('');
+    const imageThumbUrl = [base, `${imageId}_thumb.webp?alt=media`].join('');
+
+    return {
+        imageUrl,
+        imageThumbUrl,
+    };
+};
