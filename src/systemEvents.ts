@@ -1,4 +1,4 @@
-import { ts } from './date';
+import { ts } from '@gdi/language';
 
 export type SystemEvent = {
     id: number;

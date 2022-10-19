@@ -1,5 +1,4 @@
 export * from './colors';
-export * from './date';
 export * from './delay';
 export * from './download';
 export * from './events';
@@ -12,3 +11,5 @@ export * from './sort';
 export * from './storage';
 export * from './systemEvents';
 export * from './thumbs';
+
+export const ts = () => new Date().getTime();
