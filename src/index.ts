@@ -5,6 +5,7 @@ export * from './download';
 export * from './events';
 export * from './guid';
 export * from './instanceProps';
+export * from './navigation';
 export * from './object';
 export * from './rollup';
 export * from './sort';
