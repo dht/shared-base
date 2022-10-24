@@ -13,7 +13,7 @@ export const initStorage = (value: LocalStorage) => {
 };
 
 export const getString = (key: string): string => {
-    return localStorage.getItem(key) || '';
+    return localStorage.getItem(key) ?? '';
 };
 
 export const setString = (key: string, value: string) => {

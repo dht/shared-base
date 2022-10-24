@@ -10,7 +10,7 @@ export const isEmpty = (object: Json | any[]) => {
         return object.length === 0;
     }
 
-    return Object.keys(object || {}).length === 0;
+    return Object.keys(object ?? {}).length === 0;
 };
 
 export const itemsToObject = (arr: Json[] = [], page = 1, pageSize = 0) => {

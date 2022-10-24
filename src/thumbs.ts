@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 
 export const getScreenshotThumb = (widget: Json) => {
-    const { screenshots } = widget || {};
+    const { screenshots } = widget ?? {};
 
     if (!screenshots) {
         return '';
@@ -28,7 +28,7 @@ export const getScreenshotThumb = (widget: Json) => {
 };
 
 export const getScreenshot = (widget: Json) => {
-    const { screenshots } = widget || {};
+    const { screenshots } = widget ?? {};
 
     if (!screenshots) {
         return '';

@@ -22,7 +22,7 @@ const deltaText = () => {
 };
 
 export const notifyListeners = (eventId: string, data: Json = {}) => {
-    attempts[data.id] = attempts[data.id] || 0;
+    attempts[data.id] = attempts[data.id] ?? 0;
     attempts[data.id]++;
 
     if (listeners.length === 0 && attempts[data.id] < 10) {
@@ -50,7 +50,7 @@ export const systemEvent = (eventId: string, data: Json = {}) => {
 
     if (!data.id) {
         const id = index++;
-        attempts[id] = (attempts[id] || 0) + 1;
+        attempts[id] = (attempts[id] ?? 0) + 1;
         data.id = id;
         data.timestamp = ts();
         data.timestampText = deltaText();
