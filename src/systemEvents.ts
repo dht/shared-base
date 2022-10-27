@@ -1,4 +1,4 @@
-import { ts } from '@gdi/language';
+const ts = () => new Date().getTime();
 
 export type SystemEvent = {
     id: number;
