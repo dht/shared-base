@@ -19,3 +19,32 @@ export const itemsToObject = (arr: Json[] = [], page = 1, pageSize = 0) => {
         return output;
     }, {} as Json);
 };
+
+type variableType =
+    | 'string'
+    | 'number'
+    | 'boolean'
+    | 'object'
+    | 'array'
+    | 'function'
+    | 'undefined'
+    | 'null'
+    | 'bigint'
+    | 'symbol'
+    | 'unknown';
+
+export const getVariableType = (variable: any): variableType => {
+    if (variable === null) {
+        return 'null';
+    }
+
+    if (variable === undefined) {
+        return 'undefined';
+    }
+
+    if (Array.isArray(variable)) {
+        return 'array';
+    }
+
+    return typeof variable;
+};
