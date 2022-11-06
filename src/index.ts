@@ -6,6 +6,7 @@ export * from './guid';
 export * from './instanceProps';
 export * from './navigation';
 export * from './object';
+export * from './options';
 export * from './rollup';
 export * from './sort';
 export * from './storage';
