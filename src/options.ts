@@ -1,11 +1,16 @@
 import { upperFirst } from 'lodash';
 
 export const arrayToOptions = (array: string[]) => {
-    return array.map((item) => ({
-        id: item,
-        text: upperFirst(item),
-        value: item,
-    }));
+    return array.map((item) => {
+        const [id, iconName] = item.split('|');
+
+        return {
+            id,
+            text: upperFirst(id),
+            value: id,
+            iconName,
+        };
+    });
 };
 
 type Item = Json & {
