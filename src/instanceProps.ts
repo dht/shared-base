@@ -1,4 +1,4 @@
-import { set } from 'lodash';
+import set from 'lodash/set';
 
 export const flattenInstanceProps = (instanceProps: Json = {}) => {
     const output: Json = {};

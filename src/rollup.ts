@@ -1,4 +1,4 @@
-import { camelCase } from 'lodash';
+import camelCase from 'lodash/camelCase';
 
 type Dependencies = Record<string, string>;
 
