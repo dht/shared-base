@@ -1,4 +1,4 @@
-import camelCase from 'lodash/camelCase';
+import { camelCase } from './godash';
 
 type Dependencies = Record<string, string>;
 

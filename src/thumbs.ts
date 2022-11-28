@@ -1,4 +1,4 @@
-import get from 'lodash/get';
+import { get } from './godash';
 
 export const getScreenshotThumb = (widget: Json) => {
     const { screenshots } = widget ?? {};

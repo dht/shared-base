@@ -1,4 +1,4 @@
-import upperFirst from 'lodash/upperFirst';
+import { upperFirst } from './godash';
 
 export const arrayToOptions = (array: string[]) => {
     return array.map((item) => {
