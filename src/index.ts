@@ -2,6 +2,7 @@ export * from './colors';
 export * from './delay';
 export * from './download';
 export * from './events';
+export * from './ga';
 export * from './guid';
 export * from './instanceProps';
 export * from './godash';
