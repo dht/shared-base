@@ -1,4 +1,4 @@
-export const invokeEvent = (type: string, data: Json) => {
+export const invokeEvent = (type: string, data?: Json) => {
     const event = new CustomEvent(type, { detail: data });
     document.dispatchEvent(event);
 };
