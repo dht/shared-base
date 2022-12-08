@@ -78,6 +78,8 @@ describe('get', () => {
                 b: 2,
             },
         };
+        expect(get(obj, null)).toEqual(obj);
+        expect(get(obj, undefined)).toEqual(obj);
         expect(get(obj, 'a.b')).toEqual(2);
         expect(get(obj, ['a', 'b'])).toEqual(2);
         expect(get(obj, ['a', 'c'])).toEqual(undefined);
@@ -92,6 +94,12 @@ describe('set', () => {
                 b: 2,
             },
         };
+
+        set(obj, null, 3);
+        expect(obj).toEqual(obj);
+
+        set(obj, undefined, 3);
+        expect(obj).toEqual(obj);
 
         set(obj, 'a.b', 3);
         expect(obj).toEqual({
@@ -113,6 +121,15 @@ describe('set', () => {
             a: {
                 b: 4,
                 c: null,
+            },
+        });
+
+        set(obj, ['a', 'c'], undefined);
+
+        expect(obj).toEqual({
+            a: {
+                b: 4,
+                c: undefined,
             },
         });
     });

@@ -42,9 +42,13 @@ export const mergeDeep = (obj1: Object, obj2: Object) => {
 
 export const get = (
     object: Object,
-    map: string | string[],
+    map: string | string[] | null | undefined,
     defaultValue?: any
 ) => {
+    if (map === null || map === undefined) {
+        return object;
+    }
+
     const path = Array.isArray(map) ? map : map.split('.');
 
     const value = path.reduce((output, key) => {
@@ -58,7 +62,15 @@ export const cloneDeep = (object: Object) => {
     return JSON.parse(JSON.stringify(object));
 };
 
-export const set = (object: Object, map: string | string[], value: any) => {
+export const set = (
+    object: Object,
+    map: string | string[] | undefined | null,
+    value: any
+) => {
+    if (map === null || map === undefined) {
+        return;
+    }
+
     const path = Array.isArray(map) ? map : map.split('.');
 
     const lastKey = path.pop();

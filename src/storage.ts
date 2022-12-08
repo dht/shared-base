@@ -41,3 +41,8 @@ export const getJson = (key: string): Json | null => {
 export const setJson = (key: string, json: Json) => {
     setString(key, JSON.stringify(json));
 };
+
+export const patchJson = (key: string, change: Json) => {
+    const json = getJson(key) ?? {};
+    setJson(key, { ...json, ...change });
+};
