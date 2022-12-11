@@ -7,7 +7,7 @@
         "test": "jest"
     },
     "dependencies": {
-        "types-base": "0.0.2"
+        "types-base": "0.0.3"
     },
     "devDependencies": {
         "@types/chance": "^1.1.3",
