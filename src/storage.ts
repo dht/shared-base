@@ -1,3 +1,5 @@
+import { uniq } from './godash';
+
 interface LocalStorage {
     clear(): void;
     getItem(key: string): string | null;
@@ -45,4 +47,11 @@ export const setJson = (key: string, json: Json) => {
 export const patchJson = (key: string, change: Json) => {
     const json = getJson(key) ?? {};
     setJson(key, { ...json, ...change });
+};
+
+export const getArray = (key: string, extra?: string[]): string[] => {
+    const onAll = getJson(key) ?? {};
+    const onStorage = Object.keys(onAll).filter((key) => onAll[key]);
+
+    return uniq([...onStorage, ...(extra ?? [])]).sort();
 };
