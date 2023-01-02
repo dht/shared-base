@@ -9,6 +9,7 @@ export * from './godash';
 export * from './navigation';
 export * from './object';
 export * from './options';
+export * from './logs';
 export * from './markdown';
 export * from './rollup';
 export * from './sort';
