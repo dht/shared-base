@@ -16,5 +16,6 @@ export * from './sort';
 export * from './storage';
 export * from './systemEvents';
 export * from './thumbs';
+export * from './upload';
 
 export const ts = () => new Date().getTime();
