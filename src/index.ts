@@ -4,6 +4,7 @@ export * from './download';
 export * from './events';
 export * from './ga';
 export * from './guid';
+export * from './images';
 export * from './instanceProps';
 export * from './godash';
 export * from './navigation';
